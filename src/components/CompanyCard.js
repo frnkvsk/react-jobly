@@ -40,6 +40,7 @@ export default function CompanyCard({company}) {
   const classes = useStyles();
   const history = useHistory();
   const redirect = () => {
+    console.log('CompanyCard redirect history.push ',`/companies/${company.handle}`)
     history.push(`/companies/${company.handle}`);
   }
   return (

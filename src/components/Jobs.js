@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
-// import { Button, Container } from '@material-ui/core';
-// import BusinessIcon from '@material-ui/icons/Business';
 import JobCard from './JobCard';
 import Search from './Search';
 import { Container } from '@material-ui/core';
-
-// import CompaniesCard from './CompaniesCard';
+import { getJobs } from '../api/JoblyApi';
+import { SearchContext } from '../context/SearchContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,12 +44,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Jobs({jobs}) {
+export default function Jobs() {
   const classes = useStyles();
+  const {search} = useContext(SearchContext);
+  const [jobs, setJobs] = useState([]);
+  const params = {search: search};
+  useEffect(() => {
+    const getValue = async () => {
+      const value = await getJobs(params);
+      console.log('Company useEffect getValue value=',value.jobs)
+      setJobs(value.jobs.slice());
+    }
+    getValue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.search]);
 
   return (
     <Container className={classes.root}>
-      <Search /> 
+      <Search next={"jobs"}/> 
       {jobs.map(e => <JobCard job={e} /> )}
     </Container>
   );

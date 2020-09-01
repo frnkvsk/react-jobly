@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-// import { Button } from '@material-ui/core';
 import JobCard from './JobCard';
-import JoblyApi from '../api/JoblyApi';
+import {getJobs, getCompany} from '../api/JoblyApi';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,37 +42,44 @@ const useStyles = makeStyles((theme) => ({
     height: '30px', 
   }
 }));
-// const getComp = async comp => {
-//   return await JoblyApi.getCompany(comp);
-// }
+
 const Company = ({handle}) => {
   const classes = useStyles();
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState(null);
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     const getValue = async () => {
-      const value = await JoblyApi.getCompany(handle);
-      setCompany(value);
+      const value = await getCompany(handle);
+      setCompany(value.company);
     }
-    getValue();
+    if(!company) getValue();
   });
   useEffect(() => {
     const getValue = async () => {
-      const value = await JoblyApi.getJobs();;
-      setJobs(value.filter(e => e.company_handle === handle));
+      const value = await getJobs();
+      console.log('Company useEffect getValue value=',value.jobs)
+      setJobs(value.jobs.filter(e => e.company_handle === handle));
     }
-    getValue();
+    if(!jobs.length) getValue();
   });
   return (
     <>
       <Container className={classes.root} >
-        <div className={classes.header}>
-          <div><b>{company.name}</b></div>
-          <div>{company.description}</div>
-        </div>
-        {jobs.map(job => (
-          <JobCard job={job} />
-        ))}
+        {
+          company ? 
+            <div className={classes.header}>
+              <div><b>{company.name}</b></div>
+              <div>{company.description}</div>
+            </div> :
+            <h1>...Loading</h1>
+        }
+        
+        {
+          jobs.length ? jobs.map(job => (
+            <JobCard key={job.id} job={job} />
+          )) : 
+          <h1>...Loading</h1>
+        }
       </Container>
     </>
   );  

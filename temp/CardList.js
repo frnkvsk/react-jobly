@@ -30,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid lightgray',
   },
   btn: {
-    // display: 'absolute',
-    // position: 'relative',
-    // top: '50px',
-    // left: '30px',
     margin: '60px 30px 0 0',
     height: '30px', 
   }

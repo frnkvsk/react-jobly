@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,7 +7,8 @@ import { Container, FormHelperText, } from '@material-ui/core';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Button } from '@material-ui/core';
 
-import JoblyApi from '../api/JoblyApi'
+import {login} from '../api/JoblyApi'
+import {useFormInput} from '../hooks/useFormInput';
 
 function LinkTab(props) {
   return (
@@ -54,22 +55,22 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Login(login) {
+export default function Login(login_status) {
   
 
   const classes = useStyles();
-  const [loginType, setValue] = React.useState(login);
+  const [loginType, setValue] = React.useState(login_status);
 
-  const username = useFormOutlinedInput("");
-  const password = useFormOutlinedInput("");
-  const first_name = useFormOutlinedInput("");
-  const last_name = useFormOutlinedInput("");
-  const email = useFormOutlinedInput("");
+  const username = useFormInput("");
+  const password = useFormInput("");
+  const first_name = useFormInput("");
+  const last_name = useFormInput("");
+  const email = useFormInput("");
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
   const handleSubmit = () => {
-    JoblyApi.login(username.value, password.value);
+    login(username.value, password.value);
   }
   return (
     
@@ -123,15 +124,4 @@ export default function Login(login) {
   );
 }
 
-function useFormOutlinedInput(initialValue) {
-  const [value, setValue] = useState(initialValue);
 
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
-
-  return {
-    value, 
-    onChange: handleChange
-  };
-}

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter, Route, Switch, useParams} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Company from './components/Company';
@@ -8,11 +9,7 @@ import Jobs from './components/Jobs';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import Page404 from './components/Page404';
-
-
-// import {companies, jobs, user} from './testData';
-
-import { makeStyles } from '@material-ui/core/styles';
+import {SearchContext} from './context/SearchContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +19,15 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 function CompanyHandle() {
-  let handle = useParams();
+  let {handle} = useParams();
+  console.log('App CompanyHandle handle=',handle)
   return <Company handle={handle} />
 }
+
 function App() {
   const classes = useStyles();
-  
+  const [search, setSearch] = useState("");
   return (
-    // <main>
       <BrowserRouter>
         <NavBar loggedin={true} />
         <main className={classes.root}>
@@ -37,14 +35,18 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/company/:handle"> 
+            <Route exact path="/companies/:handle"> 
               <CompanyHandle />
             </Route>
             <Route exact path="/companies">
-              <Companies />
+              <SearchContext.Provider value={{search, setSearch}}>
+                <Companies />
+              </SearchContext.Provider>              
             </Route>
             <Route exact path="/jobs">
-              <Jobs />
+              <SearchContext.Provider value={{search, setSearch}}>
+                <Jobs />
+              </SearchContext.Provider>    
             </Route>
             <Route path="/profile">
               <Profile />
@@ -58,7 +60,6 @@ function App() {
           </Switch>
         </main>
       </BrowserRouter>
-    // </main>
   );
 }
 

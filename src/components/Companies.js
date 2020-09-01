@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CompanyCard from './CompanyCard';
 import Search from './Search';
 import { Container } from '@material-ui/core';
-import JoblyApi from '../api/JoblyApi';
-// import CompaniesCard from './CompaniesCard';
+import { getCompanies } from '../api/JoblyApi';
+import { SearchContext } from '../context/SearchContext';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,20 +47,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Companies() {
   const classes = useStyles();
+  const {search} = useContext(SearchContext);
   const [companies, setCompanies] = useState([]);
+  const params = {search: search};
+  console.log('Companies params=',params.search)
   useEffect(() => {
-    const getCompanies = async () => {
-      const comps = await JoblyApi.getCompanies();  
-      setCompanies(comps);
-      console.log('useEffect companies=',companies)
+    const getComps = async () => {
+      const comps = await getCompanies(params);  
+      setCompanies(comps.companies);
     }
-    getCompanies();
-  })
-  console.log('Companies export default companies = ',companies)
+    getComps();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.search]);
+
   return (
-    <Container className={classes.root}>      
-      <Search /> 
-      {companies.length ? companies.map(e => <CompanyCard company={e} /> ) : "...loading"}
+    <Container className={classes.root}> 
+      
+        <Search next={"companies"}/> 
+      
+      
+      {companies.length ? companies.map(e => <CompanyCard key={e.handle} company={e} /> ) : "...loading"}
     </Container>
   );
 }
