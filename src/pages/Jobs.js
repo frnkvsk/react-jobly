@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import JobCard from './JobCard';
-import Search from './Search';
+import JobCard from '../components/JobCard';
+import Search from '../components/SearchBar';
 import { Container } from '@material-ui/core';
 import { getJobs } from '../api/JoblyApi';
 import { SearchContext } from '../context/SearchContext';
@@ -49,6 +49,7 @@ export default function Jobs() {
   const {search} = useContext(SearchContext);
   const [jobs, setJobs] = useState([]);
   const params = {search: search};
+  console.log('Jobs params=',params)
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);

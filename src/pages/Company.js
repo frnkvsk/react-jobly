@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import JobCard from './JobCard';
+import JobCard from '../components/JobCard';
 import {getJobs, getCompany} from '../api/JoblyApi';
 
 
@@ -50,6 +50,7 @@ const Company = ({handle}) => {
   useEffect(() => {
     const getValue = async () => {
       const value = await getCompany(handle);
+      console.log('Company useEffect value=',value)
       setCompany(value.company);
     }
     if(!company) getValue();

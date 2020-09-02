@@ -1,11 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Button } from '@material-ui/core';
-import {useFormInput} from '../hooks/useFormInput';
-// import '../hooks/useSearchContext';
+// import {useFormInput} from '../hooks/useFormInput';
 import { useHistory } from "react-router-dom";
-// import useSearchContext from '../hooks/useSearchContext';
 import {SearchContext} from '../context/SearchContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,25 +20,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Search({next}) {
+export default function Search({nextPage}) {
   const classes = useStyles();
-  const searchText = useFormInput("");
   const history = useHistory();
+  let [searchText, setSearchText] = useState("");
+  
   const {setSearch} = useContext(SearchContext);
 
-  const handleSubmit = () => {
-    setSearch(searchText);
-    history.push(`/${next}`);
+  const handleSubmit = () => {    
+    history.push(`/${nextPage}`);
+    setSearchText("");
   }
-
+  const handleChange = (e) => {
+    setSearchText(e.target.value);
+    setSearch(e.target.value);
+  }
   return (
     <form className={classes.form} noValidate autoComplete="off">
       <OutlinedInput 
         className={classes.input} 
-        name="username" 
-        placeholder={`Search for a ${next}`} 
+        id="searchInput" 
+        placeholder={`Search for a ${nextPage}`} 
         variant="outlined" 
-        {...searchText}
+        value={searchText}
+        onChange={handleChange}
       />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Search

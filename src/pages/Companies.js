@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CompanyCard from './CompanyCard';
-import Search from './Search';
+import CompanyCard from '../components/CompanyCard';
+import Search from '../components/SearchBar';
 import { Container } from '@material-ui/core';
 import { getCompanies } from '../api/JoblyApi';
 import { SearchContext } from '../context/SearchContext';
@@ -49,8 +49,8 @@ export default function Companies() {
   const classes = useStyles();
   const {search} = useContext(SearchContext);
   const [companies, setCompanies] = useState([]);
-  const params = {search: search};
-  console.log('Companies params=',params.search)
+  const params = {search};
+  console.log('Companies params=',params)
   useEffect(() => {
     const getComps = async () => {
       const comps = await getCompanies(params);  
@@ -61,11 +61,9 @@ export default function Companies() {
   }, [params.search]);
 
   return (
-    <Container className={classes.root}> 
-      
-        <Search next={"companies"}/> 
-      
-      
+    <Container className={classes.root}>       
+      <Search next={"companies"}/> 
+            
       {companies.length ? companies.map(e => <CompanyCard key={e.handle} company={e} /> ) : "...loading"}
     </Container>
   );
