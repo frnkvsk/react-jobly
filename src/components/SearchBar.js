@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Button } from '@material-ui/core';
-// import {useFormInput} from '../hooks/useFormInput';
 import { useHistory } from "react-router-dom";
 import { SearchContext } from '../context/SearchContext';
 

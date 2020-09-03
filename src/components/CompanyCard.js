@@ -14,14 +14,11 @@ const useStyles = makeStyles({
     width: '100%',
     minWidth: 275,
     marginTop: '10px',
-    // boxShadow: '0 1px 2px rgba(0,0,0,0.16)',
-    // boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
     boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
     "&:hover": {
       boxShadow: '0 1px 2px rgba(0,0,0,0.3)'
     },
     cursor: 'pointer',
-    // backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 14,
@@ -40,7 +37,6 @@ export default function CompanyCard({company}) {
   const classes = useStyles();
   const history = useHistory();
   const redirect = () => {
-    console.log('CompanyCard redirect history.push ',`/companies/${company.handle}`)
     history.push(`/companies/${company.handle}`);
   }
   return (

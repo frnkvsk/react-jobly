@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, FormHelperText, } from '@material-ui/core';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { Button } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
+import { AuthContext } from '../context/AuthContext';
+import { useFormInput } from '../hooks/useFormInput';
+import { patchUserInfo } from '../api/JoblyApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '500px',
     padding: '30px',
     height: '100vh',
-    // backgroundColor: '#ffffff',
   },
   form: {
-    // border: '1px solid red',
     width: '100%',
     backgroundColor: '#ffffff',
   },
@@ -33,40 +34,100 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     margin: '10px 20px 15px',
+  },
+  success: {
+    color: '#4caf50',
+    fontSize: '24px',
+  },
+  err: {
+    color: '#ff1744',
+    fontSize: '24px',
   }
 
 }));
 
-export default function Profile({user}) {
-  //username, password, first_name, last_name, email, photo_url, is_admin
+export default function Profile() {
+  const auth = useContext(AuthContext);
+  const user = auth.authState.userInfo;
   const classes = useStyles();
-  const username = useFormOutlinedInput(user.username);
-  const first_name = useFormOutlinedInput(user.first_name);
-  const last_name = useFormOutlinedInput(user.last_name);
-  const email = useFormOutlinedInput(user.email);
-  const photo_url = useFormOutlinedInput(user.photo_url);  
+  const username = useFormInput(user.username);
+  const password = useFormInput("");
+  const first_name = useFormInput(user.first_name);
+  const last_name = useFormInput(user.last_name);
+  const email = useFormInput(user.email);
+  const photo_url = useFormInput(user.photo_url);  
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+  const handleClick = async () => {
+    try {
+      const user = {
+        jobs: auth.authState.userInfo.jobs,
+        username: username.value,
+        first_name: first_name.value,
+        last_name: last_name.value,        
+        email: email.value,
+        photo_url: photo_url.value,
+      }
+      // set context state and save it to localstorage
+      auth.setAuthState({
+        token: auth.authState.token,
+        userInfo: user,
+      });
+      // persist data to the database
+      delete user.username;
+      delete user.jobs;
+      user.password = password.value;
+      if(Object.values(user).every(e => e.length)) {
+        await patchUserInfo(username.value, auth.authState.token, user);
+        setErrorMessage(false);
+        setSuccessMessage(true);
+      } else {
+        setSuccessMessage(false);
+        setErrorMessage(true);
+      }
+      
+    } catch (error) {
+      console.error('Profile err',error);
+    }
+    
+  }
 
   return (
     
     <Container className={classes.root}>
-      <h1>Profile</h1>      
+      <h1>Profile</h1>  
+      <Box className={classes.success} 
+        component="span" 
+        display={successMessage ? 'block' : 'none'}
+        >
+          Success: Profile updated
+      </Box>    
+      <Box className={classes.err} 
+        component="span" 
+        display={errorMessage ? 'block' : 'none'}
+        >
+          Error: Inputs incomplete
+      </Box>    
       <form className={classes.form}>      
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">Username</FormHelperText>
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">{username.value}</FormHelperText>
+        <FormHelperText className={classes.label} >Username</FormHelperText>
+        <FormHelperText className={classes.label}>{username.value}</FormHelperText>
 
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">First Name</FormHelperText>
+        <FormHelperText className={classes.label}>Confirm Password</FormHelperText>
+        <OutlinedInput required={true} className={classes.input} name="password" type="password" variant="outlined" {...password} />
+
+        <FormHelperText className={classes.label}>First Name</FormHelperText>
         <OutlinedInput className={classes.input} name="first_name" variant="outlined" {...first_name}/>
 
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">Last Name</FormHelperText>
+        <FormHelperText className={classes.label}>Last Name</FormHelperText>
         <OutlinedInput className={classes.input} name="last_name" variant="outlined" {...last_name}/>
 
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">Email</FormHelperText>
+        <FormHelperText className={classes.label}>Email</FormHelperText>
         <OutlinedInput className={classes.input} name="email" variant="outlined" {...email}/>
 
-        <FormHelperText className={classes.label} id="standard-weight-helper-text">Photo URL</FormHelperText>
+        <FormHelperText className={classes.label}>Photo URL</FormHelperText>
         <OutlinedInput className={classes.input} name="photo_url" variant="outlined" {...photo_url}/>
         <div className={classes.button}>
-          <Button variant="contained" color="primary">Submit</Button>
+          <Button onClick={handleClick} variant="contained" color="primary">Update Profile</Button>
         </div>          
       </form>
       
@@ -74,15 +135,15 @@ export default function Profile({user}) {
   );
 }
 
-function useFormOutlinedInput(initialValue) {
-  const [value, setValue] = useState(initialValue);
+// function useFormOutlinedInput(initialValue) {
+//   const [value, setValue] = useState(initialValue);
 
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
+//   function handleChange(e) {
+//     setValue(e.target.value);
+//   }
 
-  return {
-    value, 
-    onChange: handleChange
-  };
-}
+//   return {
+//     value, 
+//     onChange: handleChange
+//   };
+// }

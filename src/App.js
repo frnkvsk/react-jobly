@@ -10,14 +10,11 @@ import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Page404 from './pages/Page404';
 import { SearchProvider } from './context/SearchContext';
-// import { LoginContext } from './context/LoginContext';
-// import { useLogin } from './hooks/useLogin';
 import { AuthProvider } from './context/AuthContext';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // height: '100vh',
     backgroundColor: '#f5f5f5',
   },
   
@@ -42,15 +39,11 @@ function App() {
               <Route exact path="/companies/:handle"> 
                 <CompanyHandle />
               </Route>
-              <Route exact path="/companies">
-                
-                  <Companies />
-                           
+              <Route exact path="/companies">                
+                  <Companies />                           
               </Route>
               <Route exact path="/jobs">
-                {/* <SearchProvider> */}
                   <Jobs />
-                {/* </SearchProvider>     */}
               </Route>
               <Route path="/profile">
                 <Profile />

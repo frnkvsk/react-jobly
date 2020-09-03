@@ -4,19 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Container, FormHelperText, Box, } from '@material-ui/core';
+import { Container, FormHelperText, Box, Button } from '@material-ui/core';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import { login, signup } from '../api/JoblyApi'
+import { login, signup, getUserInfo } from '../api/JoblyApi'
 import { useFormInput } from '../hooks/useFormInput';
-
-
-// import { LoginContext } from '../context/LoginContext';
-// import { useLogin } from '../hooks/useLogin';
-// import { useLocalStorage } from '../hooks/useLocalStorage';
 import { AuthContext } from '../context/AuthContext';
-// import
 
 function LinkTab(props) {
   return (
@@ -38,10 +31,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '500px',
     padding: '30px',
     height: '100vh',
-    // backgroundColor: '#ffffff',
   },
   form: {
-    // border: '1px solid red',
     width: '100%',
     backgroundColor: '#ffffff',
   },
@@ -70,17 +61,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
-
-  // const authContext = useContext(AuthContext);
-  // const {setLoginStatus} = useContext(LoginContext);
   const auth = useContext(AuthContext);
-  // const data = {_token: auth.authState.token};
-  console.log('Login auth=',auth)
-  // const {setTokenStorage} = useLogin();
-  // const {setToken} = useLocalStorage("token");
   const [loginType, setValue] = useState("signup");
-  const [errorMessage, setErrorMessage] = useState(false);
-  
+  const [errorMessage, setErrorMessage] = useState(false);  
   const username = useFormInput("");
   const password = useFormInput("");
   const first_name = useFormInput("");
@@ -94,27 +77,31 @@ export default function Login() {
     setErrorMessage(false);
 
     try {
+      // verify username and password are correct
       const resp = await login(username.value, password.value);
-      // setLoginStatus(true);
+
+      // if logged in, use resp.token to get user information
+      const userInfo = await getUserInfo(username.value, resp.token);
 
       auth.setAuthState({
-        ...auth.authState,
+        userInfo: userInfo.user,
         token: resp.token,
       });
-      console.log('Login handleSubmitLogin resp.token',resp.token)
-      // setTokenStorage(resp.token);
       history.push(`/`);
     } catch (error) {
-      console.log('--Login handleSubmitLogin err',error)
       setErrorMessage(true);
     }    
   }
   const handleSubmitSignup = async () => {
     setErrorMessage(false);
     try {
-      const resp = await signup(username.value, password.value, first_name.value, last_name.value, photo_url.value, email.value);
-      // setLoginStatus(true);
-      // setTokenStorage(resp.token);
+      const resp = await signup(
+          username.value, 
+          password.value, 
+          first_name.value, 
+          last_name.value, 
+          photo_url.value, 
+          email.value);
       auth.setAuthState({
         token: resp.token,
         userInfo: {

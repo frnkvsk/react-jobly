@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-// import { LoginContext } from '../context/LoginContext';
 import { AuthContext } from '../context/AuthContext';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

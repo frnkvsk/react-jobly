@@ -13,9 +13,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     fontSize: '28px',
     maxWidth: 'lg',
-    // backgroundColor: '#ffffff',
-    // height: '100vh',
-    // border: '1px solid red'
   },
   header: {
     display: 'flex',
@@ -34,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid lightgray',
   },
   btn: {
-    // display: 'absolute',
-    // position: 'relative',
-    // top: '50px',
-    // left: '30px',
     margin: '60px 30px 0 0',
     height: '30px', 
   }
@@ -52,17 +45,14 @@ const Company = ({handle}) => {
   useEffect(() => {
     const getValue = async () => {
       const value = await getCompany(handle, params);
-      console.log('Company useEffect value=',value)
       setCompany(value.company);
     }
-    // if(!company) 
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     const getValue = async () => {
-      const value = await getJobs();
-      console.log('Company useEffect getValue value=',value.jobs)
+      const value = await getJobs(params);
       setJobs(value.jobs.filter(e => e.company_handle === handle));
     }
     if(!jobs.length) getValue();
@@ -90,26 +80,4 @@ const Company = ({handle}) => {
   );  
 }
 
-// const useGetCompany = handle => {
-//   const [value, setValue] = useState({});
-//   useEffect(() => {
-//     const getValue = async () => {
-//       const value = await JoblyApi.getCompany(handle);
-//       setValue(value);
-//     }
-//     getValue();
-//   });
-//   return value;
-// }
-// const useGetJobs = handle => {
-//   const [value, setValue] = useState([]);
-//   useEffect(() => {
-//     const getValue = async () => {
-//       const value = await JoblyApi.getJobs();;
-//       setValue(value.filter(e => e.company_handle === handle));
-//     }
-//     getValue();
-//   });
-//   return value;
-// }
 export default Company;

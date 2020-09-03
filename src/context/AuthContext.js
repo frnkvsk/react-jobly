@@ -10,8 +10,7 @@ const useLogin = () => {
   const setTokenStorage = (newToken) => { 
     setToken(newToken);
     localStorage.setItem("token", JSON.stringify(newToken) || "");
-    console.log('useLogin token=',token)
-  };
+  }
   return {token, setTokenStorage};
 }
 
@@ -22,7 +21,6 @@ const useUserInfo = () => {
   const setUserInfoStorage = (newUserInfo) => { 
     setUserInfo(newUserInfo);
     localStorage.setItem("userInfo", JSON.stringify(newUserInfo) || "");
-    console.log('useUserInfo userInfo=',userInfo)
   };
   return {userInfo, setUserInfoStorage};
 }

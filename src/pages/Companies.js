@@ -15,14 +15,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     fontSize: '28px',
     maxWidth: 'lg',
-    // height: '100vh',
-    // border: '1px solid red'
   },
   form: {
     display: 'flex',
     width: '100%',
     margin: '30px 0 20px 0',
-    // border: '1px solid red'
   },
   input: {
     width: '100%'
@@ -34,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px 0 20px 20px',
     margin: '10px 0 10px 0',
     border: '1px solid lightgray',
-    // backgroundColor: '#ffffff',
   },
   info: {
     width: '80%',
@@ -48,15 +44,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Companies() {
   const classes = useStyles();
   const searchContext = useContext(SearchContext);
-  // searchContext.setSearchState({search: ""});
-  
   const [companies, setCompanies] = useState([]);
-  console.log('Companies searchContext.searchState.search',searchContext.searchState.search)
   const authContext = useContext(AuthContext);
   const params = {search: searchContext.searchState.search, _token: authContext.authState.token};
 
-  console.log('Companies params=',params)
-  console.log('---------------------------')
   useEffect(() => {
     const getComps = async () => {
       const comps = await getCompanies(params);  
@@ -68,8 +59,7 @@ export default function Companies() {
 
   return (
     <Container className={classes.root}>       
-      <Search next={"companies"}/> 
-            
+      <Search next={"companies"}/>            
       {companies.length ? companies.map(e => <CompanyCard key={e.handle} company={e} /> ) : "...loading"}
     </Container>
   );
