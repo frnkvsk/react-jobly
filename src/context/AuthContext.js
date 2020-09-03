@@ -3,18 +3,45 @@ import React, { useState, createContext } from 'react';
 const AuthContext = createContext();
 const { Provider } = AuthContext;
 
+const useLogin = () => {
+  let ls = JSON.parse(localStorage.getItem("token")) || "";
+  const [token, setToken] = useState(ls);
+
+  const setTokenStorage = (newToken) => { 
+    setToken(newToken);
+    localStorage.setItem("token", JSON.stringify(newToken) || "");
+    console.log('useLogin token=',token)
+  };
+  return {token, setTokenStorage};
+}
+
+const useUserInfo = () => {
+  let ls = JSON.parse(localStorage.getItem("userInfo")) || "";
+  const [userInfo, setUserInfo] = useState(ls);
+
+  const setUserInfoStorage = (newUserInfo) => { 
+    setUserInfo(newUserInfo);
+    localStorage.setItem("userInfo", JSON.stringify(newUserInfo) || "");
+    console.log('useUserInfo userInfo=',userInfo)
+  };
+  return {userInfo, setUserInfoStorage};
+}
+
 const AuthProvider = ({ children }) => {
+  const { token, setTokenStorage } = useLogin();
+  const { userInfo, setUserInfoStorage } = useUserInfo();
+
   const [authState, setAuthState] = useState({
-    token: null,
-    expiresAt: null,
-    userInfo: {}
+    token: token,
+    userInfo: userInfo,
   });
 
-  const setAuthInfo = ({ token, userInfo, expiresAt }) => {
+  const setAuthInfo = ({ token, userInfo }) => {
+    setTokenStorage(token);
+    setUserInfoStorage(userInfo);
     setAuthState({
       token,
-      userInfo,
-      expiresAt
+      userInfo,      
     });
   }
   return (
@@ -22,7 +49,7 @@ const AuthProvider = ({ children }) => {
       value={
         {
           authState,
-          setAuthState: authInfo => setAuthInfo(authInfo)
+          setAuthState: authInfo => setAuthInfo(authInfo),
         }
       }
       >

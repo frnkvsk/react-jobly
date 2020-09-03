@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBar from './components/NavBar';
@@ -9,9 +9,11 @@ import Jobs from './pages/Jobs';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Page404 from './pages/Page404';
-import { SearchContext } from './context/SearchContext';
-import { LoginContext } from './context/LoginContext';
-import { useLogin } from './hooks/useLogin';
+import { SearchProvider } from './context/SearchContext';
+// import { LoginContext } from './context/LoginContext';
+// import { useLogin } from './hooks/useLogin';
+import { AuthProvider } from './context/AuthContext';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,22 +24,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CompanyHandle() {
   let {handle} = useParams();
-  console.log('App CompanyHandle handle=',handle)
   return <Company handle={handle} />
 }
 
 function App() {
   const classes = useStyles();
-  const [token] = useLogin();
-  console.log('App token',token)
-  const [search, setSearch] = useState("");
-  
-  const [loginStatus, setLoginStatus] = useState(token ? true : false);
-
   return (
       <BrowserRouter>
-        <LoginContext.Provider value={{loginStatus, setLoginStatus}}>
-          <NavBar loggedin={true} />
+        <AuthProvider>
+        <SearchProvider>
+        <NavBar loggedin={true} />
           <main className={classes.root}>
             <Switch>
               <Route exact path="/">
@@ -47,14 +43,14 @@ function App() {
                 <CompanyHandle />
               </Route>
               <Route exact path="/companies">
-                <SearchContext.Provider value={{search, setSearch}}>
+                
                   <Companies />
-                </SearchContext.Provider>              
+                           
               </Route>
               <Route exact path="/jobs">
-                <SearchContext.Provider value={{search, setSearch}}>
+                {/* <SearchProvider> */}
                   <Jobs />
-                </SearchContext.Provider>    
+                {/* </SearchProvider>     */}
               </Route>
               <Route path="/profile">
                 <Profile />
@@ -67,8 +63,8 @@ function App() {
               </Route>
             </Switch>
           </main>
-        </LoginContext.Provider>
-        
+          </SearchProvider>   
+        </AuthProvider>        
       </BrowserRouter>
   );
 }

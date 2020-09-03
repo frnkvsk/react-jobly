@@ -10,10 +10,12 @@ import { Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { login, signup } from '../api/JoblyApi'
 import { useFormInput } from '../hooks/useFormInput';
-import { LoginContext } from '../context/LoginContext';
-import { useLogin } from '../hooks/useLogin';
+
+
+// import { LoginContext } from '../context/LoginContext';
+// import { useLogin } from '../hooks/useLogin';
 // import { useLocalStorage } from '../hooks/useLocalStorage';
-// import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 // import
 
 function LinkTab(props) {
@@ -70,10 +72,11 @@ export default function Login() {
   const history = useHistory();
 
   // const authContext = useContext(AuthContext);
-  const {setLoginStatus} = useContext(LoginContext);
-
-  
-  const [,setTokenStorage] = useLogin();
+  // const {setLoginStatus} = useContext(LoginContext);
+  const auth = useContext(AuthContext);
+  // const data = {_token: auth.authState.token};
+  console.log('Login auth=',auth)
+  // const {setTokenStorage} = useLogin();
   // const {setToken} = useLocalStorage("token");
   const [loginType, setValue] = useState("signup");
   const [errorMessage, setErrorMessage] = useState(false);
@@ -89,13 +92,20 @@ export default function Login() {
   };
   const handleSubmitLogin = async () => {
     setErrorMessage(false);
+
     try {
       const resp = await login(username.value, password.value);
-      setLoginStatus(true);
+      // setLoginStatus(true);
+
+      auth.setAuthState({
+        ...auth.authState,
+        token: resp.token,
+      });
       console.log('Login handleSubmitLogin resp.token',resp.token)
-      setTokenStorage(resp.token);
+      // setTokenStorage(resp.token);
       history.push(`/`);
     } catch (error) {
+      console.log('--Login handleSubmitLogin err',error)
       setErrorMessage(true);
     }    
   }
@@ -103,8 +113,18 @@ export default function Login() {
     setErrorMessage(false);
     try {
       const resp = await signup(username.value, password.value, first_name.value, last_name.value, photo_url.value, email.value);
-      setLoginStatus(true);
-      setTokenStorage(resp.token);
+      // setLoginStatus(true);
+      // setTokenStorage(resp.token);
+      auth.setAuthState({
+        token: resp.token,
+        userInfo: {
+          username: username.value,
+          first_name: first_name.value,
+          last_name: last_name.value,
+          photo_url: photo_url.value,
+          email: email.value,
+        }
+      });
       history.push(`/`);
     } catch (error) {
       setErrorMessage(true);

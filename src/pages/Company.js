@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import JobCard from '../components/JobCard';
-import {getJobs, getCompany} from '../api/JoblyApi';
-
+import { getJobs, getCompany } from '../api/JoblyApi';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,14 +47,18 @@ const Company = ({handle}) => {
   const classes = useStyles();
   const [company, setCompany] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const auth = useContext(AuthContext);
+  const params = {_token: auth.authState.token};
   useEffect(() => {
     const getValue = async () => {
-      const value = await getCompany(handle);
+      const value = await getCompany(handle, params);
       console.log('Company useEffect value=',value)
       setCompany(value.company);
     }
-    if(!company) getValue();
-  });
+    // if(!company) 
+    getValue();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs();

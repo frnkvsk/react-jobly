@@ -5,7 +5,7 @@ import Search from '../components/SearchBar';
 import { Container } from '@material-ui/core';
 import { getCompanies } from '../api/JoblyApi';
 import { SearchContext } from '../context/SearchContext';
-
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,10 +47,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Companies() {
   const classes = useStyles();
-  const {search} = useContext(SearchContext);
+  const searchContext = useContext(SearchContext);
+  // searchContext.setSearchState({search: ""});
+  
   const [companies, setCompanies] = useState([]);
-  const params = {search};
+  console.log('Companies searchContext.searchState.search',searchContext.searchState.search)
+  const authContext = useContext(AuthContext);
+  const params = {search: searchContext.searchState.search, _token: authContext.authState.token};
+
   console.log('Companies params=',params)
+  console.log('---------------------------')
   useEffect(() => {
     const getComps = async () => {
       const comps = await getCompanies(params);  

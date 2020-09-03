@@ -1,12 +1,10 @@
-// import {useContext} from 'react';
+// import {useState, useEffect} from 'react';
 import axios from 'axios';
-// import useSearchContext from '../hooks/useSearchContext'
-import { useLogin } from '../hooks/useLogin';
 
 const request = async (endpoint, paramsOrData = {}, verb = "get") => {
-  console.log('JoblyApi endpoint',endpoint)
-  const {token} = useLogin;
-  paramsOrData._token = token;
+  
+  // paramsOrData.token = auth.authState.token;
+  console.log('JoblyApi endpoint',endpoint, 'paramsOrData=',paramsOrData)
   // ( // for now, hardcode token for "testing"
   // // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc" +
   // // "3RpbmciLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU1MzcwMzE1M30." +
@@ -17,7 +15,7 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   try {
     const res = await axios({
       method: verb,
-      url: `http://172.22.236.214:3000/${endpoint}`,
+      url: `http://172.22.234.136:3000/${endpoint}`,
       [verb === "get" ? "params" : "data"]: paramsOrData});
     // const res = await axios({
     //   method: verb,
@@ -35,19 +33,19 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   }
 }
 
-const getCompany = async (handle) => {
+const getCompany = async (handle, token) => {
   console.log('JoblyApi getCompany')
-  return await request(`companies/${handle}`);
+  return await request(`companies/${handle}`, token);
 }
-const getCompanies = async (params={}) => {
-  console.log('---JoblyApi getCompanies params = ',params)
+const getCompanies = async (token) => {
+  console.log('---JoblyApi getCompanies params = ', token);
   
-  return await request('companies/', params);
+  return await request('companies/', token);
 }
-const getJobs = async (params={}) => {
-  console.log('JoblyApi getJobs params=',params)
+const getJobs = async (token) => {
+  console.log('JoblyApi getJobs params=', {_token: token});
   
-  return await request('jobs/', params)
+  return await request('jobs/', token);
 }
 const login = async (username, password) => {
   console.log('JoblyApi login')

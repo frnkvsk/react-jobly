@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { LoginContext } from '../context/LoginContext';
-
+// import { LoginContext } from '../context/LoginContext';
+import { AuthContext } from '../context/AuthContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-  const {loginStatus} = useContext(LoginContext);
+  const auth = useContext(AuthContext);
   return (
     <div className={classes.root}>
       <h2>Jobly</h2>
       <p>All the jobs in on, convenient place.</p>
-      {!loginStatus ? 
+      {!auth.authState.token ? 
       <Button variant="contained" color="primary">
         log in / sign up  
       </Button>

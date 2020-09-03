@@ -4,7 +4,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Button } from '@material-ui/core';
 // import {useFormInput} from '../hooks/useFormInput';
 import { useHistory } from "react-router-dom";
-import {SearchContext} from '../context/SearchContext';
+import { SearchContext } from '../context/SearchContext';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -25,7 +25,7 @@ export default function Search({nextPage}) {
   const history = useHistory();
   let [searchText, setSearchText] = useState("");
   
-  const {setSearch} = useContext(SearchContext);
+  const searchContext = useContext(SearchContext);
 
   const handleSubmit = () => {    
     history.push(`/${nextPage}`);
@@ -33,7 +33,7 @@ export default function Search({nextPage}) {
   }
   const handleChange = (e) => {
     setSearchText(e.target.value);
-    setSearch(e.target.value);
+    searchContext.setSearchState({search: e.target.value});
   }
   return (
     <form className={classes.form} noValidate autoComplete="off">
