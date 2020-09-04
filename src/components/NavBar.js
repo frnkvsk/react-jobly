@@ -7,8 +7,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import EventNoteIcon from '@material-ui/icons/EventNote';
-// import Icon from '@material-ui/core/Icon';
-
+import UserAvatar from './UserAvatar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +49,7 @@ export default function NavBar() {
             Jobly
           </Typography>
           {auth.authState.token !== "" ? <>
+            <UserAvatar />
             <Button color="inherit" component={Link} to={"/companies"} >Companies</Button>
             <Button color="inherit" component={Link} to={"/jobs"} >Jobs</Button>
             <Button color="inherit" component={Link} to={"/profile"} >Profile</Button>
