@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
@@ -9,6 +9,7 @@ import Jobs from './pages/Jobs';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Page404 from './pages/Page404';
+import Applications from './pages/Applications';
 import { SearchProvider } from './context/SearchContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -19,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   
 }));
-function CompanyHandle() {
-  let {handle} = useParams();
-  return <Company handle={handle} />
-}
 
 function App() {
   const classes = useStyles();
@@ -37,10 +34,10 @@ function App() {
                 <Home />          
               </Route>
               <Route exact path="/companies/:handle"> 
-                <CompanyHandle />
+                <Company />
               </Route>
               <Route exact path="/companies">                
-                  <Companies />                           
+                <Companies />                           
               </Route>
               <Route exact path="/jobs">
                   <Jobs />
@@ -50,6 +47,9 @@ function App() {
               </Route>
               <Route exact path="/login">
                 <Login login={"signup"} />
+              </Route>
+              <Route exact path="/applications">
+                <Applications />
               </Route>
               <Route>
                 <Page404 />

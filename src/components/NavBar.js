@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+// import Icon from '@material-ui/core/Icon';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     textDecoration: 'none',
   },
+  button: {
+    fontWeight: 'bold',
+    // border: '1px solid gray',
+    // textDecoration: 'underline',
+  }
 }));
 
 export default function NavBar() {
@@ -45,6 +53,8 @@ export default function NavBar() {
             <Button color="inherit" component={Link} to={"/companies"} >Companies</Button>
             <Button color="inherit" component={Link} to={"/jobs"} >Jobs</Button>
             <Button color="inherit" component={Link} to={"/profile"} >Profile</Button>
+            <Button className={classes.button} color="inherit" startIcon={<EventNoteIcon />} component={Link} to={"/applications"} >Applications</Button>
+            
             <Button onClick={handleClick} color="inherit" component={Link} to={"/login"} >Log out</Button>
             </> :
             <Button color="inherit" component={Link} to={"/login"} >login / signup</Button>

@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    minHeight: '100vh',
     maxWidth: '500px',
     padding: '30px',
     height: '100vh',

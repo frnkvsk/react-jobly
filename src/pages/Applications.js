@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import JobCard from '../components/JobCard';
 import Search from '../components/SearchBar';
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     fontSize: '28px',
     maxWidth: 'lg',
+    
   },
   form: {
     display: 'flex',
@@ -42,26 +43,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Jobs() {
+export default function Applications() {
   const classes = useStyles();
   const searchContext = useContext(SearchContext);
   const [jobs, setJobs] = useState([]);
   const auth = useContext(AuthContext);
+  console.log('Applications auth=',auth,' jobs=',jobs)
   const params = {search: searchContext.searchState.search, _token: auth.authState.token}; 
   
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);
-      setJobs(value.jobs.slice());
+      setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.search]);
+  }, [params.search, auth.authState.userInfo.jobs]);
 
   return (
     <Container className={classes.root}>
       <Search next={"jobs"}/> 
-      {jobs.map(job => <JobCard key={job.id} job={job} /> )}
+      {jobs.length ? jobs.map(job => <JobCard key={job.id} job={job} /> ) : <h3>You have no applications.</h3>}
     </Container>
   );
 }

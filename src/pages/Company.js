@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import JobCard from '../components/JobCard';
@@ -10,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    minHeight: '100vh',
     fontSize: '28px',
     maxWidth: 'lg',
   },
@@ -36,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Company = ({handle}) => {
+const Company = () => {
   const classes = useStyles();
+  const {handle} = useParams();
   const [company, setCompany] = useState(null);
   const [jobs, setJobs] = useState([]);
   const auth = useContext(AuthContext);

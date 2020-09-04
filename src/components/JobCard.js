@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles({
   root: {
@@ -34,9 +35,32 @@ const useStyles = makeStyles({
 });
 
 export default function JobCard({job}) {
-  const classes = useStyles();
+  // console.log('JobCard job=',job)
+  const classes = useStyles();  
+  const auth = useContext(AuthContext);
+  // console.log(auth.authState.userInfo)
+  const [state, setState] = useState({
+    applied: auth.authState.userInfo.jobs.includes(job.id)
+  });
+  const handleApply = () => {
+    let jobs = [...auth.authState.userInfo.jobs];
+    if(jobs.includes(job.id)) 
+      jobs = jobs.filter(e => e !== job.id);
+    else 
+      jobs.push(job.id);
+      
+    const authInfo = {
+      token: auth.authState.token,
+      userInfo: {
+        ...auth.authState.userInfo,
+        jobs: jobs
+      }
+    }
+    auth.setAuthState(authInfo);
+    setState({applied: !state.applied})
+  }
 
-  return (
+  return (    
     <Card className={classes.root}>
       <CardContent>        
         <Typography className={classes.title} variant="h5" component="h2">
@@ -50,11 +74,11 @@ export default function JobCard({job}) {
         </Typography>        
       </CardContent>
       <CardActions>
-      <Button className={classes.btn} variant="contained" color="secondary">
-        Apply
+      <Button onClick={handleApply} className={classes.btn} variant={state.applied ? "outlined" : "contained"} color="secondary">
+        {state.applied ? "Applied" : "Apply"}
       </Button>
       </CardActions>
-    </Card>
+    </Card>  
   );
 }
 
