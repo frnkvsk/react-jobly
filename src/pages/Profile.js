@@ -60,7 +60,7 @@ export default function Profile() {
   const [errorMessage, setErrorMessage] = useState(false);
   const handleClick = async () => {
     try {
-      const user = {
+      const userInfo = {
         jobs: auth.authState.userInfo.jobs,
         username: username.value,
         first_name: first_name.value,
@@ -71,14 +71,14 @@ export default function Profile() {
       // set context state and save it to localstorage
       auth.setAuthState({
         token: auth.authState.token,
-        userInfo: user,
+        userInfo: userInfo,
       });
       // persist data to the database
-      delete user.username;
-      delete user.jobs;
-      user.password = password.value;
-      if(Object.values(user).every(e => e.length)) {
-        await patchUserInfo(username.value, auth.authState.token, user);
+      delete userInfo.username;
+      delete userInfo.jobs;
+      userInfo.password = password.value;
+      if(Object.values(userInfo).every(e => e.length)) {
+        await patchUserInfo(auth.authState.token, username.value,userInfo);
         setErrorMessage(false);
         setSuccessMessage(true);
       } else {
@@ -134,16 +134,3 @@ export default function Profile() {
     </Container>
   );
 }
-
-// function useFormOutlinedInput(initialValue) {
-//   const [value, setValue] = useState(initialValue);
-
-//   function handleChange(e) {
-//     setValue(e.target.value);
-//   }
-
-//   return {
-//     value, 
-//     onChange: handleChange
-//   };
-// }

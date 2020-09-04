@@ -14,10 +14,7 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   try {
     const res = await axios({
       method: verb,
-      // url: `http://172.22.230.172:3000/${endpoint}`,
-      // [verb === "get" ? "params" : "data"]: paramsOrData});
-    // const res = await axios({
-    //   method: verb,
+      // url: `http://172.22.224.174:3000/${endpoint}`,
       url: `http://localhost:3000/${endpoint}`,
       [verb === "get" ? "params" : "data"]: paramsOrData});
     return res.data;
@@ -30,8 +27,8 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   }
 }
 
-const getCompany = async (handle, token) => {
-  return await request(`companies/${handle}`, token);
+const getCompany = async (token, companyHandle) => {
+  return await request(`companies/${companyHandle}`, token);
 }
 const getCompanies = async (token) => {  
   return await request('companies/', token);
@@ -51,12 +48,20 @@ const signup = async (username, password, first_name, last_name, photo_url, emai
     photo_url: photo_url, 
     email: email}, 'post');
 }
-const getUserInfo = async (username, token) => {
+const getUserInfo = async (token, username) => {
   return await request(`users/${username}/`, {_token: token});
 }
-const patchUserInfo = async (username, token, user) => {
-  user._token = token;
-  return await request(`users/${username}/`, user, 'patch');
+const patchUserInfo = async (token, username, userInfo) => {
+  userInfo._token = token;
+  return await request(`users/${username}/`, userInfo, 'patch');
+}
+const postUserApply = async (token, jobId, username, state) => {
+  const userInfo = {
+    _token: token,
+    username: username,
+    state: state,
+  } 
+  return await request(`jobs/${jobId}/apply`, userInfo, 'post');
 }
 
 export {
@@ -66,4 +71,5 @@ export {
   login, 
   signup, 
   getUserInfo, 
-  patchUserInfo };
+  patchUserInfo,
+  postUserApply };

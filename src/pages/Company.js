@@ -47,7 +47,7 @@ const Company = () => {
   const params = {_token: auth.authState.token};
   useEffect(() => {
     const getValue = async () => {
-      const value = await getCompany(handle, params);
+      const value = await getCompany(params, handle);
       setCompany(value.company);
     }
     getValue();

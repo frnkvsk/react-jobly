@@ -83,7 +83,7 @@ export default function Login() {
       const resp = await login(username.value, password.value);
 
       // if logged in, use resp.token to get user information
-      const userInfo = await getUserInfo(username.value, resp.token);
+      const userInfo = await getUserInfo(resp.token, username.value);
 
       auth.setAuthState({
         userInfo: userInfo.user,

@@ -54,6 +54,7 @@ export default function Applications() {
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);
+      console.log('Applications jobs=',auth.authState.userInfo.jobs)
       setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
     }
     getValue();

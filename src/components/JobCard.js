@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../context/AuthContext';
-
+import { postUserApply } from '../api/JoblyApi';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -42,12 +42,18 @@ export default function JobCard({job}) {
   const [state, setState] = useState({
     applied: auth.authState.userInfo.jobs.includes(job.id)
   });
-  const handleApply = () => {
-    let jobs = [...auth.authState.userInfo.jobs];
-    if(jobs.includes(job.id)) 
+  const handleApply = async () => {
+    let {jobs} = auth.authState.userInfo;
+    const {token} = auth.authState;
+    const {username} = auth.authState.userInfo;
+
+    if(jobs.includes(job.id)) {
       jobs = jobs.filter(e => e !== job.id);
-    else 
+      await postUserApply(token, job.id, username, "closed");
+    } else {
       jobs.push(job.id);
+      await postUserApply(token, job.id, username, "applied");
+    }     
       
     const authInfo = {
       token: auth.authState.token,
