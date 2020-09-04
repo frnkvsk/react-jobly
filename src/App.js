@@ -46,7 +46,7 @@ function App() {
                 <Profile />
               </Route>
               <Route exact path="/login">
-                <Login login={"signup"} />
+                <Login />
               </Route>
               <Route exact path="/applications">
                 <Applications />

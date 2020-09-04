@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { AuthContext } from '../context/AuthContext';
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const history = useHistory();
   const auth = useContext(AuthContext);
   return (
     <div className={classes.root}>
@@ -30,7 +32,7 @@ const Home = () => {
         <h2>Jobly</h2>
         <p>All the jobs in on, convenient place.</p>
         {!auth.authState.token ? 
-        <Button variant="contained" color="primary">
+        <Button onClick={() => history.push(`/login`)} variant="contained" color="primary">
           log in / sign up  
         </Button>
         : null}

@@ -64,7 +64,7 @@ export default function Login() {
   const classes = useStyles();
   const history = useHistory();
   const auth = useContext(AuthContext);
-  const [loginType, setValue] = useState("signup");
+  const [loginType, setValue] = useState("login");
   const [errorMessage, setErrorMessage] = useState(false);  
   const username = useFormInput("");
   const password = useFormInput("");
@@ -72,9 +72,11 @@ export default function Login() {
   const last_name = useFormInput("");  
   const photo_url = useFormInput("");
   const email = useFormInput("");
+
   const handleChange = (e, newValue) => {
     setValue(newValue);
-  };
+  }
+
   const handleSubmitLogin = async () => {
     setErrorMessage(false);
 
