@@ -12,7 +12,7 @@ import Page404 from './pages/Page404';
 import Applications from './pages/Applications';
 import { SearchProvider } from './context/SearchContext';
 import { AuthProvider } from './context/AuthContext';
-
+import { PageCountProvider } from './context/PageCountContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,9 +26,10 @@ function App() {
   return (
       <BrowserRouter>
         <AuthProvider>
-        <SearchProvider>
+        <SearchProvider> 
         <NavBar loggedin={true} />
           <main className={classes.root}>
+          <PageCountProvider>
             <Switch>
               <Route exact path="/">
                 <Home />          
@@ -55,6 +56,7 @@ function App() {
                 <Page404 />
               </Route>
             </Switch>
+            </PageCountProvider>
           </main>
           </SearchProvider>   
         </AuthProvider>        

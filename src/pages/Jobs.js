@@ -6,6 +6,8 @@ import { Container } from '@material-ui/core';
 import { getJobs } from '../api/JoblyApi';
 import { SearchContext } from '../context/SearchContext';
 import { AuthContext } from '../context/AuthContext';
+import PaginationComp from '../components/Pagination';
+import { PageCountContext } from '../context/PageCountContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,28 +19,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '28px',
     maxWidth: 'lg',
   },
-  form: {
+  pagination: {
     display: 'flex',
-    width: '100%',
-    margin: '30px 0 20px 0',
-  },
-  input: {
-    width: '100%'
-  },
-  card: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: '20px 0 20px 20px',
-    margin: '10px 0 10px 0',
-    border: '1px solid lightgray',
-  },
-  info: {
-    width: '80%',
-  },
-  icon: {
-    fontSize: '40px',
-    margin: '30px 20px 0 0',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: '20px',
   },
 }));
 
@@ -46,6 +31,8 @@ export default function Jobs() {
   const classes = useStyles();
   const searchContext = useContext(SearchContext);
   const [jobs, setJobs] = useState([]);
+  const pageCountContext = useContext(PageCountContext);
+  let {pageCurr} = pageCountContext.pageContext;
   const auth = useContext(AuthContext);
   const params = {search: searchContext.searchState.search, _token: auth.authState.token}; 
   
@@ -61,7 +48,8 @@ export default function Jobs() {
   return (
     <Container className={classes.root}>
       <Search next={"jobs"}/> 
-      {jobs.map(job => <JobCard key={job.id} job={job} /> )}
+      {jobs.slice((pageCurr*10), (pageCurr*10)+10).map(job => <JobCard key={job.id} job={job} /> )}
+      <PaginationComp pageCount={jobs.length}/>
     </Container>
   );
 }
