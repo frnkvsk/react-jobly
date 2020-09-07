@@ -35,12 +35,10 @@ const useStyles = makeStyles({
 });
 
 export default function JobCard({job}) {
-  // console.log('JobCard job=',job)
   const classes = useStyles();  
   const auth = useContext(AuthContext);
-  // console.log(auth.authState.userInfo)
   const [state, setState] = useState({
-    applied: auth.authState.userInfo.jobs.includes(job.id)
+    applied: auth.authState.userInfo.jobs ? auth.authState.userInfo.jobs.includes(job.id) : false
   });
   const handleApply = async () => {
     let {jobs} = auth.authState.userInfo;

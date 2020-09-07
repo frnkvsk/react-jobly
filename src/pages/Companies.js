@@ -46,7 +46,7 @@ export default function Companies() {
   }, [params.search]);
   return (
     <Container className={classes.root}>       
-      <Search next={"companies"}/>            
+      <Search nextPage={"companies"}/>            
       {companies.length ? companies.slice((pageCurr*10), (pageCurr*10)+10).map(e => <CompanyCard key={e.handle} company={e} /> ) : "...loading"}
       <PaginationComp pageCount={companies.length}/>     
     </Container>

@@ -17,6 +17,8 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
       // url: `http://172.22.224.174:3000/${endpoint}`,
       url: `http://localhost:3000/${endpoint}`,
       [verb === "get" ? "params" : "data"]: paramsOrData});
+
+  // console.debug("--res.data", res.data);
     return res.data;
       // axios sends query string data via the "params" key,
       // and request body data via the "data" key,

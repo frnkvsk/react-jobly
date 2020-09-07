@@ -1,3 +1,6 @@
+/**
+ Search is a Component that has a textbox and button. Enter a string into the textbox and click the button will update the current global 'SearchContext' state.
+ */
 import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -39,7 +42,7 @@ export default function Search({nextPage}) {
       <OutlinedInput 
         className={classes.input} 
         id="searchInput" 
-        placeholder={`Search for a ${nextPage}`} 
+        placeholder={`Search for ${nextPage}`} 
         variant="outlined" 
         value={searchText}
         onChange={handleChange}
@@ -48,5 +51,5 @@ export default function Search({nextPage}) {
         Search
       </Button>
     </form>
-  );
+  )
 }

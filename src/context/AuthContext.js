@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
     token: token,
     userInfo: userInfo,
   });
-
+  console.log('-----userInfo',userInfo)
   const setAuthInfo = ({ token, userInfo }) => {
     setTokenStorage(token);
     setUserInfoStorage(userInfo);

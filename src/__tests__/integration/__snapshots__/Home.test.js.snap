@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="makeStyles-root-3"
+  >
+    <main
+      class="makeStyles-main-4"
+    >
+      <h2>
+        Jobly
+      </h2>
+      <p>
+        All the jobs in one, convenient place.
+      </p>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          log in / sign up
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </main>
+  </div>
+</DocumentFragment>
+`;

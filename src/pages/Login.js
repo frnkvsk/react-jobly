@@ -145,7 +145,7 @@ export default function Login() {
       
       {loginType === 'login' ?    
         <form className={classes.form}>
-          <FormHelperText className={classes.label} >username</FormHelperText>
+          <FormHelperText className={classes.label} >Username</FormHelperText>
           <OutlinedInput className={classes.input} name="username" variant="outlined" {...username}/>
 
           <FormHelperText className={classes.label} >Password</FormHelperText>

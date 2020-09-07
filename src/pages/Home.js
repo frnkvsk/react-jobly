@@ -30,7 +30,7 @@ const Home = () => {
     <div className={classes.root}>
       <main className={classes.main}>
         <h2>Jobly</h2>
-        <p>All the jobs in on, convenient place.</p>
+        <p>All the jobs in one, convenient place.</p>
         {!auth.authState.token ? 
         <Button onClick={() => history.push(`/login`)} variant="contained" color="primary">
           log in / sign up  

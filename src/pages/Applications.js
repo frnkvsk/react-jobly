@@ -63,7 +63,7 @@ export default function Applications() {
 
   return (
     <Container className={classes.root}>
-      <Search next={"jobs"}/> 
+      <Search nextPage={"jobs"}/> 
       {jobs.length ? jobs.map(job => <JobCard key={job.id} job={job} /> ) : <h3>You have no applications.</h3>}
     </Container>
   );

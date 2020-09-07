@@ -38,8 +38,12 @@ export default function Jobs() {
   
   useEffect(() => {
     const getValue = async () => {
-      const value = await getJobs(params);
-      setJobs(value.jobs.slice());
+      try {
+        const value = await getJobs(params);
+        setJobs(value.jobs.slice());
+      } catch (error) {
+        console.debug('--Jobs useEffect getValue error',error);
+      }
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,8 +51,14 @@ export default function Jobs() {
 
   return (
     <Container className={classes.root}>
-      <Search next={"jobs"}/> 
-      {jobs.slice((pageCurr*10), (pageCurr*10)+10).map(job => <JobCard key={job.id} job={job} /> )}
+      <Search nextPage={"jobs"}/> 
+      { jobs.length ?
+        jobs
+          .slice((pageCurr*10), (pageCurr*10)+10)
+          .map(job => <JobCard key={job.id} job={job} /> )
+        :
+        <div>...Loading</div>
+      }
       <PaginationComp pageCount={jobs.length}/>
     </Container>
   );
