@@ -20,14 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    // fontSize: '20px',
     color: '#ffffff',
     textDecoration: 'none',
   },
   button: {
     fontWeight: 'bold',
-    // border: '1px solid gray',
-    // textDecoration: 'underline',
   }
 }));
 

@@ -32,7 +32,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function CompanyCard({company}) {
   const classes = useStyles();
   const history = useHistory();

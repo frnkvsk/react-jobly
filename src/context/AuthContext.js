@@ -17,7 +17,6 @@ const useLogin = () => {
 const useUserInfo = () => {
   let ls = JSON.parse(localStorage.getItem("userInfo")) || "";
   const [userInfo, setUserInfo] = useState(ls);
-
   const setUserInfoStorage = (newUserInfo) => { 
     setUserInfo(newUserInfo);
     localStorage.setItem("userInfo", JSON.stringify(newUserInfo) || "");
@@ -28,12 +27,10 @@ const useUserInfo = () => {
 const AuthProvider = ({ children }) => {
   const { token, setTokenStorage } = useLogin();
   const { userInfo, setUserInfoStorage } = useUserInfo();
-
   const [authState, setAuthState] = useState({
     token: token,
     userInfo: userInfo,
   });
-  console.log('-----userInfo',userInfo)
   const setAuthInfo = ({ token, userInfo }) => {
     setTokenStorage(token);
     setUserInfoStorage(userInfo);
