@@ -15,7 +15,7 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
       // and request body data via the "data" key,
       // so the key we need depends on the HTTP verb
   }catch(err) {
-    let message = err.response.data.message;
+    let message = err.response ? err.response.data.message : err;
     throw Array.isArray(message) ? message : [message];
   }
 }

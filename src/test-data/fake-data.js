@@ -1,4 +1,14 @@
 const testData = {
+  users: [
+    {
+      username: 'testuser1', 
+      password: 'testpassword1', 
+      first_name: 'testfirstname1', 
+      last_name: 'testlastname1', 
+      photo_url: null, 
+      email: 'test@test1.com'
+    }
+  ],
   jobs: [
     {
     company_handle: "test-company-a",

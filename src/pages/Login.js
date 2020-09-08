@@ -146,10 +146,10 @@ export default function Login() {
       {loginType === 'login' ?    
         <form className={classes.form}>
           <FormHelperText className={classes.label} >Username</FormHelperText>
-          <OutlinedInput className={classes.input} name="username" variant="outlined" {...username}/>
+          <OutlinedInput className={classes.input} id="username" name="username" type="text" variant="outlined" {...username}/>
 
           <FormHelperText className={classes.label} >Password</FormHelperText>
-          <OutlinedInput className={classes.input} name="password" type="password" variant="outlined" {...password} />
+          <OutlinedInput className={classes.input} id="password" name="password" type="password" variant="outlined" {...password} />
           <div className={classes.button}>
             <Button variant="contained" color="primary" onClick={handleSubmitLogin}>Submit</Button>
           </div>
