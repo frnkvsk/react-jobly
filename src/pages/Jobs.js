@@ -6,8 +6,9 @@ import { Container } from '@material-ui/core';
 import { getJobs } from '../api/JoblyApi';
 import { SearchContext } from '../context/SearchContext';
 import { AuthContext } from '../context/AuthContext';
-import PaginationComp from '../components/Pagination';
 import { PageCountContext } from '../context/PageCountContext';
+
+import PaginationComp from '../components/Pagination';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,11 +32,11 @@ export default function Jobs() {
   const classes = useStyles();
   const searchContext = useContext(SearchContext);
   const [jobs, setJobs] = useState([]);
-  const pageCountContext = useContext(PageCountContext);
-  let {pageCurr} = pageCountContext.pageContext;
+  const pageCountContext = useContext(PageCountContext);  
   const auth = useContext(AuthContext);
   const params = {search: searchContext.searchState.search, _token: auth.authState.token}; 
-  
+  let pageCurr = pageCountContext.pageContext ? pageCountContext.pageContext.pageCurr : 1;
+
   useEffect(() => {
     const getValue = async () => {
       try {

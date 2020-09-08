@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useEffect, useState, useCallback, createContext } from 'react';
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
@@ -8,7 +8,7 @@ const useLogin = () => {
   const [token, setToken] = useState(ls);
 
   const setTokenStorage = (newToken) => { 
-    setToken(newToken);
+    useCallback(() => setToken(newToken), []);
     localStorage.setItem("token", JSON.stringify(newToken) || "");
   }
   return {token, setTokenStorage};
@@ -18,7 +18,7 @@ const useUserInfo = () => {
   let ls = JSON.parse(localStorage.getItem("userInfo")) || "";
   const [userInfo, setUserInfo] = useState(ls);
   const setUserInfoStorage = (newUserInfo) => { 
-    setUserInfo(newUserInfo);
+    useCallback(() => setUserInfo(newUserInfo), []);
     localStorage.setItem("userInfo", JSON.stringify(newUserInfo) || "");
   };
   return {userInfo, setUserInfoStorage};
@@ -32,12 +32,15 @@ const AuthProvider = ({ children }) => {
     userInfo: userInfo,
   });
   const setAuthInfo = ({ token, userInfo }) => {
+    const {username, first_name, last_name, email, photo_url} = userInfo;
     setTokenStorage(token);
     setUserInfoStorage(userInfo);
-    setAuthState({
-      token,
-      userInfo,      
-    });
+    useEffect(() => {
+      setAuthState({
+        token,
+        userInfo,      
+      });      
+    }, [username, first_name, last_name, email, photo_url, token]);
   }
   return (
     <Provider

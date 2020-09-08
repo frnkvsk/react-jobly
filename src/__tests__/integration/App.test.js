@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent } from '@testing-library/react';
-import App from '../../src/App';
+import App from '../../App';
 
 // smoke and appearance tests
 test('renders Home ', () => {

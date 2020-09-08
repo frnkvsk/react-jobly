@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '../../test-data/test-utils';
+import { render, screen, fireEvent } from '../src/test-data/test-utils';
 import Login from '../../pages/Login';
 
 // smoke and appearance tests
