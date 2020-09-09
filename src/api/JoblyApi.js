@@ -1,13 +1,16 @@
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+
 const request = async (endpoint, paramsOrData = {}, verb = "get") => {
+  
   
   console.debug("API Call:", endpoint, paramsOrData, verb);
 
   try {
     const res = await axios({
       method: verb,
-      url: `http://localhost:3000/${endpoint}`,
+      url: `${BASE_URL}/${endpoint}`,
       [verb === "get" ? "params" : "data"]: paramsOrData});
       
     return res.data;
