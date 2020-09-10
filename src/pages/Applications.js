@@ -48,14 +48,14 @@ export default function Applications() {
   const searchContext = useContext(SearchContext);
   const [jobs, setJobs] = useState([]);
   const auth = useContext(AuthContext);
-  console.log('Applications auth=',auth,' jobs=',jobs)
   const params = {search: searchContext.searchState.search, _token: auth.authState.token}; 
   
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);
-      console.log('Applications jobs=',auth.authState.userInfo.jobs)
-      setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
+      if(value) {
+        setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
+      }      
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
