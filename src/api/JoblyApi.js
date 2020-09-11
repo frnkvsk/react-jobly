@@ -1,8 +1,14 @@
 import axios from 'axios';
+<<<<<<< HEAD
 const BASE_URL = 'https://jobly-app-frnkvsk.herokuapp.com/'
 // const BASE_URL = 'https://frnkvskjobly.herokuapp.com/';
 //process.env.REACT_APP_BASE_URL || "http://localhost:3001/";
 // const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001/";
+=======
+require('dotenv').config();
+
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+>>>>>>> e94462676a209fbe08e3ccc29a60c1d58665523b
 
 const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   
