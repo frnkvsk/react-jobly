@@ -5,7 +5,6 @@ const useLogin = () => {
   const [token, setToken] = useState(ls);
 
   const setTokenStorage = (newToken) => { 
-    // useCallback(() => setToken(newToken), []);
     setToken(newToken);
     localStorage.setItem("token", JSON.stringify(newToken) || "");
   }

@@ -7,11 +7,7 @@ const SearchProvider = ({ children }) => {
   let [searchState, setSearchState] = useState({search: ""});
 
   const setSearchInfo = ( newSearch ) => {
-    // const {search} = newSearch;
     setSearchState(newSearch);
-    // useEffect(() => {
-    //   setSearchState(newSearch);
-    // }, [search]);    
   }
 
   return (    

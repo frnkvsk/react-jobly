@@ -12,14 +12,7 @@ const PageCountProvider = ({ children }) => {
 
   const setPageInfo = (newPageContext ) => {   
     setPageState(newPageContext);
-  };   
-  
-  // const setPageInfo = ( {pagesTotal, pageCurr} ) => {
-  //   const  newPageContext = {pagesTotal, pageCurr};
-  //   useMemo(() => {
-  //     setPageState(newPageContext);
-  //   }, [pagesTotal, pageCurr]);    
-  // }
+  }; 
 
   return (    
     <Provider
