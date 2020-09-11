@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from 'react';
+import React, { createContext, useState } from 'react';
 
 const PageCountContext = createContext();
 const { Provider } = PageCountContext;
@@ -11,7 +11,6 @@ const PageCountProvider = ({ children }) => {
   });
 
   const setPageInfo = (newPageContext ) => {   
-    console.log('setPageInfo', newPageContext) 
     setPageState(newPageContext);
   };   
   

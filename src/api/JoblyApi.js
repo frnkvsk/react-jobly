@@ -1,16 +1,20 @@
 import axios from 'axios';
-
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = 'https://jobly-app-frnkvsk.herokuapp.com/'
+// const BASE_URL = 'https://frnkvskjobly.herokuapp.com/';
+//process.env.REACT_APP_BASE_URL || "http://localhost:3001/";
+// const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001/";
 
 const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   
   
   console.debug("API Call:", endpoint, paramsOrData, verb);
 
+  
   try {
     const res = await axios({
       method: verb,
-      url: `${BASE_URL}/${endpoint}`,
+      url: `${BASE_URL}${endpoint}`,
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json'},
       [verb === "get" ? "params" : "data"]: paramsOrData});
       
     return res.data;
