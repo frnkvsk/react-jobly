@@ -47,7 +47,9 @@ const Company = () => {
   useEffect(() => {
     const getValue = async () => {
       const value = await getCompany(params, handle);
-      setCompany(value.company);
+      if(value) {
+        setCompany(value.company);
+      }      
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,7 +57,9 @@ const Company = () => {
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);
-      setJobs(value.jobs.filter(e => e.company_handle === handle));
+      if(value) {
+        setJobs(value.jobs.filter(e => e.company_handle === handle));
+      }      
     }
     if(!jobs.length) getValue();
   });

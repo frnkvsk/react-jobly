@@ -38,8 +38,10 @@ export default function Companies() {
   
   useEffect(() => {
     const getValue = async () => {
-      const value = await getCompanies(params);  
-      setCompanies(value.companies);
+      const value = await getCompanies(params); 
+      if(value) {
+        setCompanies(value.companies);
+      }       
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps

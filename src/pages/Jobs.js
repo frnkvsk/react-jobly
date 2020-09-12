@@ -41,7 +41,9 @@ export default function Jobs() {
     const getValue = async () => {
       try {
         const value = await getJobs(params);
-        setJobs(value.jobs.slice());
+        if(value) {
+          setJobs(value.jobs.slice());
+        }        
       } catch (error) {
         console.debug('--Jobs useEffect getValue error',error);
       }
