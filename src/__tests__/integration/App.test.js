@@ -42,7 +42,7 @@ describe('test App and Login', () => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<App />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<App />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

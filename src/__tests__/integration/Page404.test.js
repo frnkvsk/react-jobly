@@ -11,7 +11,7 @@ test('renders Page404 ', async() => {
 });
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Page404 />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Page404 />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

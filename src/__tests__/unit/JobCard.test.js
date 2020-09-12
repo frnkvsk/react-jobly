@@ -17,7 +17,7 @@ test('renders JobCard ', async() => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<JobCard job={testData.jobs[0]}/>);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<JobCard job={testData.jobs[0]}/>);
+//   expect(asFragment()).toMatchSnapshot();
+// });

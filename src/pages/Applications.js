@@ -53,9 +53,9 @@ export default function Applications() {
   useEffect(() => {
     const getValue = async () => {
       const value = await getJobs(params);
-      if(value) {
-        setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
-      }      
+        if(value) {
+          setJobs(value.jobs.filter(job => auth.authState.userInfo.jobs.includes(job.id) ) );
+        }            
     }
     getValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps

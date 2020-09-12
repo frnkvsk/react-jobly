@@ -16,7 +16,7 @@ test('renders Home ', async() => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Home />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Home />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

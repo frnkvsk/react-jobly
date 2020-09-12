@@ -18,7 +18,7 @@ test('renders Companies ', async() => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Companies />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Companies />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

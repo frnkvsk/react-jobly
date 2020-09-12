@@ -18,7 +18,7 @@ test('renders SearchBar ', () => {
 });
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Search nextPage={'jobs'}/>);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Search nextPage={'jobs'}/>);
+//   expect(asFragment()).toMatchSnapshot();
+// });

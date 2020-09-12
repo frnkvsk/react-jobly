@@ -1,12 +1,12 @@
 import axios from 'axios';
 require('dotenv').config();
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001/";
 
 const request = async (endpoint, paramsOrData = {}, verb = "get") => {
   
   
-  console.debug("API Call:", endpoint, paramsOrData, verb);
+  console.debug("API Call:", BASE_URL, endpoint, paramsOrData, verb);
 
   
   try {
@@ -27,32 +27,60 @@ const request = async (endpoint, paramsOrData = {}, verb = "get") => {
 }
 
 const getCompany = async (token, companyHandle) => {
-  return await request(`companies/${companyHandle}`, token);
+  try {
+    return await request(`companies/${companyHandle}`, token);
+  } catch (error) {
+    console.error(error);
+  }  
 }
 const getCompanies = async (token) => {  
-  return await request('companies/', token);
+  try {
+    return await request('companies/', token);
+  } catch (error) {
+    console.error(error);
+  }  
 }
 const getJobs = async (token) => {
-  return await request('jobs/', token);
+  try {
+    return await request('jobs/', token);  
+  } catch (error) {
+    console.error(error);
+  }  
 }
 const login = async (username, password) => {
-  return await request('login/', {username: username, password: password}, 'post');
+  try {
+    return await request('login/', {username: username, password: password}, 'post');
+  } catch (error) {
+    console.error(error);
+  }   
 }
 const signup = async (username, password, first_name, last_name, photo_url, email) => {
-  return await request('users/', {
-    username: username, 
-    password: password, 
-    first_name: first_name, 
-    last_name: last_name, 
-    photo_url: photo_url, 
-    email: email}, 'post');
+  try {
+    return await request('users/', {
+      username: username, 
+      password: password, 
+      first_name: first_name, 
+      last_name: last_name, 
+      photo_url: photo_url, 
+      email: email}, 'post');
+  } catch (error) {
+    console.error(error);
+  }   
 }
 const getUserInfo = async (token, username) => {
-  return await request(`users/${username}/`, {_token: token});
+  try {
+    return await request(`users/${username}/`, {_token: token});
+  } catch (error) {
+    console.error(error);
+  }   
 }
 const patchUserInfo = async (token, username, userInfo) => {
   userInfo._token = token;
-  return await request(`users/${username}/`, userInfo, 'patch');
+  try {
+    return await request(`users/${username}/`, userInfo, 'patch');
+  } catch (error) {
+    console.error(error);
+  }   
 }
 const postUserApply = async (token, jobId, username, state) => {
   const userInfo = {
@@ -60,7 +88,11 @@ const postUserApply = async (token, jobId, username, state) => {
     username: username,
     state: state,
   } 
-  return await request(`jobs/${jobId}/apply`, userInfo, 'post');
+  try {
+    return await request(`jobs/${jobId}/apply`, userInfo, 'post');
+  } catch (error) {
+    console.error(error);
+  }   
 }
 
 export {

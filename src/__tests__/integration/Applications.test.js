@@ -5,7 +5,7 @@ import Applications from '../../pages/Applications';
 
 // smoke and appearance tests
 test('renders Applications ', async() => {
-  render(<Applications />);
+  render(<Applications />);   
   
   expect(screen.getByPlaceholderText(/Search for jobs/i)).toBeInTheDocument();
 
@@ -16,7 +16,7 @@ test('renders Applications ', async() => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Applications />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Applications />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

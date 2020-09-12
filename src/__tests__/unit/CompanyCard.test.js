@@ -14,7 +14,7 @@ test('renders CompanyCard ', async() => {
 });
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<CompanyCard company={testData.companies[0]}/>);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<CompanyCard company={testData.companies[0]}/>);
+//   expect(asFragment()).toMatchSnapshot();
+// });

@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { AuthContext, AuthProvider } from '../../context/AuthContext';
 
 const TestComponent = () => {
   const auth = useContext(AuthContext);
-  auth.setAuthState({
-    token: 'testtoken',
-    userInfo: {
-    username: 'testuser',
-    first_name: 'testfirst',
-    last_name: 'testlast',
-    email: 'test@test.com',
-    photo_url: null
-  }});
+  useEffect(() => {
+    auth.setAuthState({
+      token: 'testtoken',
+      userInfo: {
+      username: 'testuser',
+      first_name: 'testfirst',
+      last_name: 'testlast',
+      email: 'test@test.com',
+      photo_url: null
+    }});
+  }, []);  
 
   return (
     <div>

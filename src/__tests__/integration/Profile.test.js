@@ -15,7 +15,7 @@ test('renders Profile ', async() => {
 });
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<Profile />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<Profile />);
+//   expect(asFragment()).toMatchSnapshot();
+// });

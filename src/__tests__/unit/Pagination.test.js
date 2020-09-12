@@ -25,7 +25,7 @@ test('renders NavBar ', async() => {
 });
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<PaginationComp pageCount={33}/>);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<PaginationComp pageCount={33}/>);
+//   expect(asFragment()).toMatchSnapshot();
+// });

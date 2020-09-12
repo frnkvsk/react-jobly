@@ -17,9 +17,8 @@ const AllTheProviders = (page) => {
           </PageCountProvider>
         </SearchProvider>
       </AuthProvider> 
-    </BrowserRouter>
-    
-  );
+    </BrowserRouter>      
+  );  
 }
 
 // re-export everything

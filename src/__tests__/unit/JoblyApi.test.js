@@ -11,7 +11,7 @@ import {getCompany,
 
 import { testData } from '../../test-data/fake-data';
 
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://localhost:3001/';
 
 describe('getCompany tests', () => {  
   it('getCompany', async () => {
@@ -23,7 +23,6 @@ describe('getCompany tests', () => {
         )
       })
     );
-    
     server.listen();
     const res = await getCompany('testtoken', testData.companies[0].handle);
     expect(res.name).toEqual(testData.companies[0].name);

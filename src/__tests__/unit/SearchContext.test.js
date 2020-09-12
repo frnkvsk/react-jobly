@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { SearchContext, SearchProvider } from '../../context/SearchContext';
 
 const TestComponent = () => {
   const search = useContext(SearchContext);
-  search.setSearchState({
-    search: 'test search'
-  });
+  useEffect(() => {
+    search.setSearchState({    
+      search: 'test search'
+    });
+  }, [])
+  
 
   return (
     <div>

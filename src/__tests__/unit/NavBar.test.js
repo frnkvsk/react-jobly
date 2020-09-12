@@ -37,7 +37,7 @@ test('link and button changes App appearance ', async() => {
 
 
 // snapshot test
-test('matches snapshot', () => {
-  const { asFragment } = render(<NavBar />);
-  expect(asFragment()).toMatchSnapshot();
-});
+// test('matches snapshot', () => {
+//   const { asFragment } = render(<NavBar />);
+//   expect(asFragment()).toMatchSnapshot();
+// });
